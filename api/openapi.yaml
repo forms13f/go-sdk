@@ -1,0 +1,637 @@
+openapi: 3.0.0
+info:
+  description: API for SEC form filings such as 13F.
+  title: SEC form 13F API
+  version: 1.0.0
+servers:
+- description: Production server
+  url: https://forms13f.com
+paths:
+  /api/v1/filers:
+    get:
+      description: Returns a list of unique filers with their CIK and associated company
+        names.
+      parameters:
+      - description: Skip previous offset CIKs
+        example: 0
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+      - description: Return max limit CIKs
+        example: 100
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          maximum: 250
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - cik: "1012622"
+                company_names:
+                - ORACLE INVESTMENT MANAGEMENT INC
+                - Alternative name
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiV1Filer'
+                type: array
+          description: A JSON array of filers
+        "400":
+          description: Invalid request parameters
+        "500":
+          description: Internal server error
+      summary: Retrieve unique filers.
+  /api/v1/filer:
+    get:
+      description: Returns a filer with the specified CIK (Central Index Key) and
+        associated company names.
+      parameters:
+      - description: The Central Index Key (CIK) of the filer.
+        example: "1067983"
+        in: query
+        name: cik
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                cik: "1012622"
+                company_names:
+                - BERKSHIRE HATHAWAY INC
+                - Alternative name
+              schema:
+                $ref: '#/components/schemas/ApiV1Filer'
+          description: A JSON object representing the filer
+        "400":
+          description: Invalid request parameters
+        "404":
+          description: Filer not found
+        "500":
+          description: Internal server error
+      summary: Retrieve a filer by CIK.
+  /api/v1/forms:
+    get:
+      description: This API returns SEC 13F forms between dates for a filer with CIK.
+        Uses a period of report as timestamp.
+      parameters:
+      - description: The Central Index Key (CIK) of the filer.
+        example: "0001067983"
+        in: query
+        name: cik
+        required: true
+        schema:
+          type: string
+      - description: All forms returned will be on or after this period of report
+          date.
+        example: 2023-12-31
+        in: query
+        name: from
+        required: false
+        schema:
+          default: 2010-01-01
+          type: string
+      - description: All forms returned will be on or before this period of report
+          date.
+        example: 2024-12-31
+        in: query
+        name: to
+        required: false
+        schema:
+          default: 2030-01-01
+          type: string
+      - description: Skip the first offset forms.
+        example: 0
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+      - description: Return at most limit forms.
+        example: 100
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          maximum: 250
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - url: https://www.sec.gov/Archives/edgar/data/1067983/0000950123-24-008740.txt
+                accession_number: 0000950123-24-008740
+                submission_type: 13F-HR
+                public_document_count: 2
+                period_of_report: 2024-06-30
+                filed_as_of_date: 2024-08-14
+                date_as_of_change: 2024-08-14
+                effectiveness_date: 2024-08-14
+                cik: "0001067983"
+                company_name: BERKSHIRE HATHAWAY INC
+                irs_number: "470813844"
+                state_of_incorporation: DE
+                fiscal_year_end: "1231"
+                form_type: 13F-HR
+                sec_act: 1934 Act
+                sec_file_number: 028-04545
+                film_number: "241207432"
+                business_address: "3555 FARNAM STREET, OMAHA, NE, 68131"
+                business_phone: "4023461400"
+                table_value_total: 1000000
+                table_entry_total: 50
+                is_amendment: true
+                amendment_type: A
+                conf_denied_expired: true
+                conf_date_denied_expired: 2024-05-31
+                amendment_date_reported: 2024-02-14
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiV1Form'
+                type: array
+          description: A JSON array of FormHeader
+        "400":
+          description: Invalid request parameters
+        "500":
+          description: Internal server error
+      summary: Retrieve SEC forms 13F for a filer.
+  /api/v1/form:
+    get:
+      description: Retrieve a content of form 13F by accession number and CIK.
+      parameters:
+      - description: The accession number of the form entry.
+        in: query
+        name: accession_number
+        required: true
+        schema:
+          example: 0000950123-24-008740
+          type: string
+      - description: The Central Index Key (CIK) of the form entry.
+        in: query
+        name: cik
+        required: true
+        schema:
+          example: "0001067983"
+          type: string
+      - description: The offset for pagination.
+        example: 0
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+      - description: The limit for pagination.
+        example: 100
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          format: int32
+          maximum: 250
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - accession_number: 0000950123-24-008740
+                cik: "0001067983"
+                name_of_issuer: VISA INC
+                title_of_class: COM CL A
+                cusip: 92826C839
+                value: 2177834326
+                ssh_prnamt: 8297460
+                ssh_prnamt_type: SH
+                investment_discretion: DFND
+                voting_authority_sole: 8297460
+                voting_authority_shared: 0
+                voting_authority_none: 0
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiV1FormEntry'
+                type: array
+          description: A JSON array containing form entries.
+        "400":
+          description: "Invalid input, object invalid."
+        "500":
+          description: Internal server error.
+      summary: Get SEC Form 13F.
+  /api/v1/funds:
+    get:
+      description: Returns a list of unique companies with their names and associated
+        CIKs.
+      parameters:
+      - description: Filter companies by by a substring of their name
+        example: berkshire
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+      - description: Skip previous offset companies
+        example: 0
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+      - description: Return max limit companies
+        example: 100
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          maximum: 250
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - name: BERKSHIRE HATHAWAY INC
+                CIK: "1067983"
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiV1Fund'
+                type: array
+          description: A JSON array of companies
+        "400":
+          description: Invalid request parameters
+        "500":
+          description: Internal server error
+      summary: Retrieve unique companies.
+  /api/v1/filings:
+    get:
+      description: Get the 13F filings for all filers in the specified time range.
+        Uses a form filing date as timestamp.
+      parameters:
+      - description: All filings returned will be on or after this filing date.
+        example: 2023-01-01
+        in: query
+        name: from
+        required: true
+        schema:
+          format: date
+          type: string
+      - description: All filings returned will be on or before this filing date.
+        example: 2023-12-31
+        in: query
+        name: to
+        required: true
+        schema:
+          format: date
+          type: string
+      - description: Skip the first offset filings.
+        example: 0
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+      - description: Return at most limit filings.
+        example: 100
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          maximum: 250
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - url: https://www.sec.gov/Archives/edgar/data/1067983/0000950123-24-008740.txt
+                accession_number: 0000950123-24-008740
+                submission_type: 13F-HR
+                public_document_count: 2
+                period_of_report: 2024-06-30
+                filed_as_of_date: 2024-08-14
+                date_as_of_change: 2024-08-14
+                effectiveness_date: 2024-08-14
+                cik: "0001067983"
+                company_name: BERKSHIRE HATHAWAY INC
+                irs_number: "470813844"
+                state_of_incorporation: DE
+                fiscal_year_end: "1231"
+                form_type: 13F-HR
+                sec_act: 1934 Act
+                sec_file_number: 028-04545
+                film_number: "241207432"
+                business_address: "3555 FARNAM STREET, OMAHA, NE, 68131"
+                business_phone: "4023461400"
+                table_value_total: 1000000
+                table_entry_total: 50
+                is_amendment: true
+                amendment_type: A
+                conf_denied_expired: true
+                conf_date_denied_expired: 2024-05-31
+                amendment_date_reported: 2024-02-14
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiV1Form'
+                type: array
+          description: A JSON array of FormHeader
+        "400":
+          description: Invalid request parameters
+        "500":
+          description: Internal server error
+      summary: Retrieve 13F filings for all filers in the time range.
+  /api/v1/tickers:
+    get:
+      description: |
+        Either `cusips` or `tickers` parameter must be provided.
+      parameters:
+      - description: Array of CUSIPs to match
+        in: query
+        name: cusips
+        required: false
+        schema:
+          example: "037833100,594918104"
+          items:
+            type: string
+          maxItems: 25
+          type: array
+          x-customForceArray: true
+      - description: Array of tickers to match
+        in: query
+        name: tickers
+        required: false
+        schema:
+          items:
+            type: string
+          maxItems: 25
+          type: array
+          x-customForceArray: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                example1:
+                  summary: Example response
+                  value:
+                  - ticker: AAPL
+                    cusip: "037833100"
+                    company_name: Apple
+                  - ticker: MSFT
+                    cusip: 594918104
+                    company_name: Microsoft Corporation
+              schema:
+                items:
+                  $ref: '#/components/schemas/TickerInfo'
+                type: array
+          description: A list of matching tickers
+        "400":
+          description: Invalid request parameters
+        "500":
+          description: Internal server error
+      summary: "Returns cusip, ticker, and company name for provided matching cusips\
+        \ or tickers parameters"
+components:
+  schemas:
+    ApiV1Filer:
+      example:
+        cik: cik
+        company_names:
+        - company_names
+        - company_names
+      properties:
+        cik:
+          description: The Central Index Key (CIK) of the filer.
+          type: string
+        company_names:
+          description: An array of company names associated with the CIK.
+          items:
+            type: string
+          type: array
+      type: object
+    ApiV1Form:
+      example:
+        sec_act: sec_act
+        fiscal_year_end: fiscal_year_end
+        cik: cik
+        business_address: business_address
+        amendment_type: amendment_type
+        table_entry_total: 1
+        form_type: form_type
+        filed_as_of_date: 2000-01-23
+        business_phone: business_phone
+        submission_type: submission_type
+        sec_file_number: sec_file_number
+        conf_date_denied_expired: 2000-01-23
+        is_amendment: true
+        date_as_of_change: 2000-01-23
+        film_number: film_number
+        conf_denied_expired: true
+        effectiveness_date: 2000-01-23
+        amendment_date_reported: 2000-01-23
+        url: url
+        accession_number: accession_number
+        public_document_count: 0
+        state_of_incorporation: state_of_incorporation
+        irs_number: irs_number
+        company_name: company_name
+        period_of_report: 2000-01-23
+        table_value_total: 6
+      properties:
+        url:
+          description: The URL of the form.
+          type: string
+        accession_number:
+          description: The accession number of the form.
+          type: string
+        submission_type:
+          description: The submission type of the form.
+          type: string
+        public_document_count:
+          description: The public document count.
+          nullable: true
+          type: integer
+        period_of_report:
+          description: The period of the report.
+          format: date
+          type: string
+        filed_as_of_date:
+          description: The filed as of date.
+          format: date
+          type: string
+        date_as_of_change:
+          description: The date as of change.
+          format: date
+          type: string
+        effectiveness_date:
+          description: The effectiveness date.
+          format: date
+          type: string
+        cik:
+          description: The Central Index Key (CIK).
+          type: string
+        company_name:
+          description: The company name.
+          type: string
+        irs_number:
+          description: The IRS number.
+          type: string
+        state_of_incorporation:
+          description: The state of incorporation.
+          type: string
+        fiscal_year_end:
+          description: The fiscal year end.
+          type: string
+        form_type:
+          description: The form type.
+          type: string
+        sec_act:
+          description: The SEC act.
+          type: string
+        sec_file_number:
+          description: The SEC file number.
+          type: string
+        film_number:
+          description: The film number.
+          type: string
+        business_address:
+          description: The business address.
+          nullable: true
+          type: string
+        business_phone:
+          description: The business phone.
+          nullable: true
+          type: string
+        table_value_total:
+          description: The total value of the table.
+          format: int64
+          nullable: true
+          type: integer
+        table_entry_total:
+          description: The total entry count of the table.
+          format: int64
+          nullable: true
+          type: integer
+        is_amendment:
+          description: Indicates if the form is an amendment.
+          type: boolean
+        amendment_type:
+          description: The type of amendment.
+          type: string
+        conf_denied_expired:
+          description: Indicates if the confidentiality request was denied or expired.
+          type: boolean
+        conf_date_denied_expired:
+          description: The date when the confidentiality request was denied or expired.
+          format: date
+          type: string
+        amendment_date_reported:
+          description: The date when the amendment was reported.
+          format: date
+          type: string
+      type: object
+    ApiV1FormEntry:
+      example:
+        accession_number: accession_number
+        voting_authority_none: 5
+        name_of_issuer: name_of_issuer
+        title_of_class: title_of_class
+        cusip: cusip
+        cik: cik
+        investment_discretion: investment_discretion
+        ssh_prnamt_type: ssh_prnamt_type
+        voting_authority_sole: 1
+        voting_authority_shared: 5
+        value: 0
+        ssh_prnamt: 6
+      properties:
+        accession_number:
+          description: The accession number of the form entry.
+          type: string
+        cik:
+          description: The Central Index Key (CIK) of the form entry.
+          type: string
+        name_of_issuer:
+          description: The name of the issuer.
+          type: string
+        title_of_class:
+          description: The title of the class of securities.
+          type: string
+        cusip:
+          description: The CUSIP number of the securities.
+          type: string
+        value:
+          description: The value of the securities.
+          format: int64
+          nullable: true
+          type: integer
+        ssh_prnamt:
+          description: The number of shares or principal amount.
+          format: int64
+          nullable: true
+          type: integer
+        ssh_prnamt_type:
+          description: The type of shares or principal amount.
+          nullable: true
+          type: string
+        investment_discretion:
+          description: The investment discretion.
+          nullable: true
+          type: string
+        voting_authority_sole:
+          description: The sole voting authority.
+          format: int64
+          nullable: true
+          type: integer
+        voting_authority_shared:
+          description: The shared voting authority.
+          format: int64
+          nullable: true
+          type: integer
+        voting_authority_none:
+          description: The no voting authority.
+          format: int64
+          nullable: true
+          type: integer
+      type: object
+    ApiV1Fund:
+      example:
+        CIK: CIK
+        name: name
+      properties:
+        name:
+          description: The name of the company.
+          type: string
+        CIK:
+          description: The CIK of the company.
+          type: string
+      type: object
+    TickerInfo:
+      example:
+        cusip: cusip
+        ticker: ticker
+        company_name: company_name
+      properties:
+        cusip:
+          type: string
+        ticker:
+          type: string
+        company_name:
+          type: string
+      type: object
