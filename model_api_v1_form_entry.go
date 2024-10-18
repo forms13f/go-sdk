@@ -30,6 +30,8 @@ type ApiV1FormEntry struct {
 	TitleOfClass *string `json:"title_of_class,omitempty"`
 	// The CUSIP number of the securities.
 	Cusip *string `json:"cusip,omitempty"`
+	// The ticker of the securities.
+	Ticker *string `json:"ticker,omitempty"`
 	// The value of the securities.
 	Value NullableInt64 `json:"value,omitempty"`
 	// The number of shares or principal amount.
@@ -221,6 +223,38 @@ func (o *ApiV1FormEntry) HasCusip() bool {
 // SetCusip gets a reference to the given string and assigns it to the Cusip field.
 func (o *ApiV1FormEntry) SetCusip(v string) {
 	o.Cusip = &v
+}
+
+// GetTicker returns the Ticker field value if set, zero value otherwise.
+func (o *ApiV1FormEntry) GetTicker() string {
+	if o == nil || IsNil(o.Ticker) {
+		var ret string
+		return ret
+	}
+	return *o.Ticker
+}
+
+// GetTickerOk returns a tuple with the Ticker field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiV1FormEntry) GetTickerOk() (*string, bool) {
+	if o == nil || IsNil(o.Ticker) {
+		return nil, false
+	}
+	return o.Ticker, true
+}
+
+// HasTicker returns a boolean if a field has been set.
+func (o *ApiV1FormEntry) HasTicker() bool {
+	if o != nil && !IsNil(o.Ticker) {
+		return true
+	}
+
+	return false
+}
+
+// SetTicker gets a reference to the given string and assigns it to the Ticker field.
+func (o *ApiV1FormEntry) SetTicker(v string) {
+	o.Ticker = &v
 }
 
 // GetValue returns the Value field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -541,6 +575,9 @@ func (o ApiV1FormEntry) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Cusip) {
 		toSerialize["cusip"] = o.Cusip
+	}
+	if !IsNil(o.Ticker) {
+		toSerialize["ticker"] = o.Ticker
 	}
 	if o.Value.IsSet() {
 		toSerialize["value"] = o.Value.Get()

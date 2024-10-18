@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **NameOfIssuer** | Pointer to **string** | The name of the issuer. | [optional] 
 **TitleOfClass** | Pointer to **string** | The title of the class of securities. | [optional] 
 **Cusip** | Pointer to **string** | The CUSIP number of the securities. | [optional] 
+**Ticker** | Pointer to **string** | The ticker of the securities. | [optional] 
 **Value** | Pointer to **NullableInt64** | The value of the securities. | [optional] 
 **SshPrnamt** | Pointer to **NullableInt64** | The number of shares or principal amount. | [optional] 
 **SshPrnamtType** | Pointer to **NullableString** | The type of shares or principal amount. | [optional] 
@@ -160,6 +161,31 @@ SetCusip sets Cusip field to given value.
 `func (o *ApiV1FormEntry) HasCusip() bool`
 
 HasCusip returns a boolean if a field has been set.
+
+### GetTicker
+
+`func (o *ApiV1FormEntry) GetTicker() string`
+
+GetTicker returns the Ticker field if non-nil, zero value otherwise.
+
+### GetTickerOk
+
+`func (o *ApiV1FormEntry) GetTickerOk() (*string, bool)`
+
+GetTickerOk returns a tuple with the Ticker field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTicker
+
+`func (o *ApiV1FormEntry) SetTicker(v string)`
+
+SetTicker sets Ticker field to given value.
+
+### HasTicker
+
+`func (o *ApiV1FormEntry) HasTicker() bool`
+
+HasTicker returns a boolean if a field has been set.
 
 ### GetValue
 

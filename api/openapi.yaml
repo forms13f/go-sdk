@@ -214,6 +214,7 @@ paths:
                 name_of_issuer: VISA INC
                 title_of_class: COM CL A
                 cusip: 92826C839
+                ticker: V
                 value: 2177834326
                 ssh_prnamt: 8297460
                 ssh_prnamt_type: SH
@@ -548,18 +549,19 @@ components:
       type: object
     ApiV1FormEntry:
       example:
-        accession_number: accession_number
         voting_authority_none: 5
-        name_of_issuer: name_of_issuer
         title_of_class: title_of_class
         cusip: cusip
+        ticker: ticker
         cik: cik
-        investment_discretion: investment_discretion
         ssh_prnamt_type: ssh_prnamt_type
         voting_authority_sole: 1
+        ssh_prnamt: 6
+        accession_number: accession_number
+        name_of_issuer: name_of_issuer
+        investment_discretion: investment_discretion
         voting_authority_shared: 5
         value: 0
-        ssh_prnamt: 6
       properties:
         accession_number:
           description: The accession number of the form entry.
@@ -575,6 +577,9 @@ components:
           type: string
         cusip:
           description: The CUSIP number of the securities.
+          type: string
+        ticker:
+          description: The ticker of the securities.
           type: string
         value:
           description: The value of the securities.
