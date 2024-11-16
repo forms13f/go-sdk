@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **VotingAuthoritySole** | Pointer to **NullableInt64** | The sole voting authority. | [optional] 
 **VotingAuthorityShared** | Pointer to **NullableInt64** | The shared voting authority. | [optional] 
 **VotingAuthorityNone** | Pointer to **NullableInt64** | The no voting authority. | [optional] 
+**PutCall** | Pointer to **NullableString** | Indicates if this is a derivative position. | [optional] 
 
 ## Methods
 
@@ -432,6 +433,41 @@ HasVotingAuthorityNone returns a boolean if a field has been set.
 `func (o *ApiV1FormEntry) UnsetVotingAuthorityNone()`
 
 UnsetVotingAuthorityNone ensures that no value is present for VotingAuthorityNone, not even an explicit nil
+### GetPutCall
+
+`func (o *ApiV1FormEntry) GetPutCall() string`
+
+GetPutCall returns the PutCall field if non-nil, zero value otherwise.
+
+### GetPutCallOk
+
+`func (o *ApiV1FormEntry) GetPutCallOk() (*string, bool)`
+
+GetPutCallOk returns a tuple with the PutCall field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPutCall
+
+`func (o *ApiV1FormEntry) SetPutCall(v string)`
+
+SetPutCall sets PutCall field to given value.
+
+### HasPutCall
+
+`func (o *ApiV1FormEntry) HasPutCall() bool`
+
+HasPutCall returns a boolean if a field has been set.
+
+### SetPutCallNil
+
+`func (o *ApiV1FormEntry) SetPutCallNil(b bool)`
+
+ SetPutCallNil sets the value for PutCall to be an explicit nil
+
+### UnsetPutCall
+`func (o *ApiV1FormEntry) UnsetPutCall()`
+
+UnsetPutCall ensures that no value is present for PutCall, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

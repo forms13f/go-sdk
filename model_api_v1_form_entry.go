@@ -46,6 +46,8 @@ type ApiV1FormEntry struct {
 	VotingAuthorityShared NullableInt64 `json:"voting_authority_shared,omitempty"`
 	// The no voting authority.
 	VotingAuthorityNone NullableInt64 `json:"voting_authority_none,omitempty"`
+	// Indicates if this is a derivative position.
+	PutCall NullableString `json:"put_call,omitempty"`
 }
 
 // NewApiV1FormEntry instantiates a new ApiV1FormEntry object
@@ -551,6 +553,48 @@ func (o *ApiV1FormEntry) UnsetVotingAuthorityNone() {
 	o.VotingAuthorityNone.Unset()
 }
 
+// GetPutCall returns the PutCall field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApiV1FormEntry) GetPutCall() string {
+	if o == nil || IsNil(o.PutCall.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PutCall.Get()
+}
+
+// GetPutCallOk returns a tuple with the PutCall field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApiV1FormEntry) GetPutCallOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PutCall.Get(), o.PutCall.IsSet()
+}
+
+// HasPutCall returns a boolean if a field has been set.
+func (o *ApiV1FormEntry) HasPutCall() bool {
+	if o != nil && o.PutCall.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPutCall gets a reference to the given NullableString and assigns it to the PutCall field.
+func (o *ApiV1FormEntry) SetPutCall(v string) {
+	o.PutCall.Set(&v)
+}
+// SetPutCallNil sets the value for PutCall to be an explicit nil
+func (o *ApiV1FormEntry) SetPutCallNil() {
+	o.PutCall.Set(nil)
+}
+
+// UnsetPutCall ensures that no value is present for PutCall, not even an explicit nil
+func (o *ApiV1FormEntry) UnsetPutCall() {
+	o.PutCall.Unset()
+}
+
 func (o ApiV1FormEntry) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -599,6 +643,9 @@ func (o ApiV1FormEntry) ToMap() (map[string]interface{}, error) {
 	}
 	if o.VotingAuthorityNone.IsSet() {
 		toSerialize["voting_authority_none"] = o.VotingAuthorityNone.Get()
+	}
+	if o.PutCall.IsSet() {
+		toSerialize["put_call"] = o.PutCall.Get()
 	}
 	return toSerialize, nil
 }

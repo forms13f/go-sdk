@@ -560,6 +560,7 @@ components:
         accession_number: accession_number
         name_of_issuer: name_of_issuer
         investment_discretion: investment_discretion
+        put_call: put_call
         voting_authority_shared: 5
         value: 0
       properties:
@@ -614,6 +615,10 @@ components:
           format: int64
           nullable: true
           type: integer
+        put_call:
+          description: Indicates if this is a derivative position.
+          nullable: true
+          type: string
       type: object
     ApiV1Fund:
       example:
