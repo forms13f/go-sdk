@@ -1,66 +1,66 @@
-# forms13f.DefaultApi
+# \DefaultAPI
 
 All URIs are relative to *https://forms13f.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**api_v1_filer_get**](DefaultApi.md#api_v1_filer_get) | **GET** /api/v1/filer | Retrieve a filer by CIK.
-[**api_v1_filers_get**](DefaultApi.md#api_v1_filers_get) | **GET** /api/v1/filers | Retrieve unique filers.
-[**api_v1_filings_get**](DefaultApi.md#api_v1_filings_get) | **GET** /api/v1/filings | Retrieve 13F filings for all filers in the time range.
-[**api_v1_form_get**](DefaultApi.md#api_v1_form_get) | **GET** /api/v1/form | Get SEC Form 13F.
-[**api_v1_forms_get**](DefaultApi.md#api_v1_forms_get) | **GET** /api/v1/forms | Retrieve SEC forms 13F for a filer.
-[**api_v1_funds_get**](DefaultApi.md#api_v1_funds_get) | **GET** /api/v1/funds | Retrieve unique companies.
-[**api_v1_holders_get**](DefaultApi.md#api_v1_holders_get) | **GET** /api/v1/holders | Retrieve CIKs for a given CUSIP and period of report.
-[**api_v1_tickers_get**](DefaultApi.md#api_v1_tickers_get) | **GET** /api/v1/tickers | Returns cusip, ticker, and company name for provided matching cusips or tickers parameters
-[**api_v1_topfunds_get**](DefaultApi.md#api_v1_topfunds_get) | **GET** /api/v1/topfunds | Get top funds by PnL for a given quarter.
+[**ApiV1FilerGet**](DefaultAPI.md#ApiV1FilerGet) | **Get** /api/v1/filer | Retrieve a filer by CIK.
+[**ApiV1FilersGet**](DefaultAPI.md#ApiV1FilersGet) | **Get** /api/v1/filers | Retrieve unique filers.
+[**ApiV1FilingsGet**](DefaultAPI.md#ApiV1FilingsGet) | **Get** /api/v1/filings | Retrieve 13F filings for all filers in the time range.
+[**ApiV1FormGet**](DefaultAPI.md#ApiV1FormGet) | **Get** /api/v1/form | Get SEC Form 13F.
+[**ApiV1FormsGet**](DefaultAPI.md#ApiV1FormsGet) | **Get** /api/v1/forms | Retrieve SEC forms 13F for a filer.
+[**ApiV1FundsGet**](DefaultAPI.md#ApiV1FundsGet) | **Get** /api/v1/funds | Retrieve unique companies.
+[**ApiV1TickersGet**](DefaultAPI.md#ApiV1TickersGet) | **Get** /api/v1/tickers | Returns cusip, ticker, and company name for provided matching cusips or tickers parameters
 
 
-# **api_v1_filer_get**
-> ApiV1Filer api_v1_filer_get(cik)
+
+## ApiV1FilerGet
+
+> ApiV1Filer ApiV1FilerGet(ctx).Cik(cik).Execute()
 
 Retrieve a filer by CIK.
 
-Returns a filer with the specified CIK (Central Index Key) and associated company names.
+
 
 ### Example
 
+```go
+package main
 
-```python
-import forms13f
-from forms13f.models.api_v1_filer import ApiV1Filer
-from forms13f.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/forms13f/go-sdk"
 )
 
+func main() {
+	cik := "1067983" // string | The Central Index Key (CIK) of the filer.
 
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    cik = '1067983' # str | The Central Index Key (CIK) of the filer.
-
-    try:
-        # Retrieve a filer by CIK.
-        api_response = api_instance.api_v1_filer_get(cik)
-        print("The response of DefaultApi->api_v1_filer_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_filer_get: %s\n" % e)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1FilerGet(context.Background()).Cik(cik).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1FilerGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1FilerGet`: ApiV1Filer
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1FilerGet`: %v\n", resp)
+}
 ```
 
+### Path Parameters
 
 
-### Parameters
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1FilerGetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **cik** | **str**| The Central Index Key (CIK) of the filer. | 
+ **cik** | **string** | The Central Index Key (CIK) of the filer. | 
 
 ### Return type
 
@@ -72,72 +72,67 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-### HTTP response details
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A JSON object representing the filer |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | Filer not found |  -  |
-**500** | Internal server error |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+## ApiV1FilersGet
 
-# **api_v1_filers_get**
-> List[ApiV1Filer] api_v1_filers_get(offset=offset, limit=limit)
+> []ApiV1Filer ApiV1FilersGet(ctx).Offset(offset).Limit(limit).Execute()
 
 Retrieve unique filers.
 
-Returns a list of unique filers with their CIK and associated company names.
+
 
 ### Example
 
+```go
+package main
 
-```python
-import forms13f
-from forms13f.models.api_v1_filer import ApiV1Filer
-from forms13f.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/forms13f/go-sdk"
 )
 
+func main() {
+	offset := int32(0) // int32 | Skip previous offset CIKs (optional) (default to 0)
+	limit := int32(100) // int32 | Return max limit CIKs (optional) (default to 100)
 
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    offset = 0 # int | Skip previous offset CIKs (optional) (default to 0)
-    limit = 100 # int | Return max limit CIKs (optional) (default to 100)
-
-    try:
-        # Retrieve unique filers.
-        api_response = api_instance.api_v1_filers_get(offset=offset, limit=limit)
-        print("The response of DefaultApi->api_v1_filers_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_filers_get: %s\n" % e)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1FilersGet(context.Background()).Offset(offset).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1FilersGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1FilersGet`: []ApiV1Filer
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1FilersGet`: %v\n", resp)
+}
 ```
 
+### Path Parameters
 
 
-### Parameters
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1FilersGetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **offset** | **int**| Skip previous offset CIKs | [optional] [default to 0]
- **limit** | **int**| Return max limit CIKs | [optional] [default to 100]
+ **offset** | **int32** | Skip previous offset CIKs | [default to 0]
+ **limit** | **int32** | Return max limit CIKs | [default to 100]
 
 ### Return type
 
-[**List[ApiV1Filer]**](ApiV1Filer.md)
+[**[]ApiV1Filer**](ApiV1Filer.md)
 
 ### Authorization
 
@@ -145,75 +140,72 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-### HTTP response details
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A JSON array of filers |  -  |
-**400** | Invalid request parameters |  -  |
-**500** | Internal server error |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+## ApiV1FilingsGet
 
-# **api_v1_filings_get**
-> List[ApiV1Form] api_v1_filings_get(var_from, to, offset=offset, limit=limit)
+> []ApiV1Form ApiV1FilingsGet(ctx).From(from).To(to).Offset(offset).Limit(limit).Execute()
 
 Retrieve 13F filings for all filers in the time range.
 
-Get the 13F filings for all filers in the specified time range. Uses a form filing date as timestamp.
+
 
 ### Example
 
+```go
+package main
 
-```python
-import forms13f
-from forms13f.models.api_v1_form import ApiV1Form
-from forms13f.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
+import (
+	"context"
+	"fmt"
+	"os"
+    "time"
+	openapiclient "github.com/forms13f/go-sdk"
 )
 
+func main() {
+	from := time.Now() // string | All filings returned will be on or after this filing date.
+	to := time.Now() // string | All filings returned will be on or before this filing date.
+	offset := int32(0) // int32 | Skip the first offset filings. (optional) (default to 0)
+	limit := int32(100) // int32 | Return at most limit filings. (optional) (default to 100)
 
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    var_from = '2023-01-01' # date | All filings returned will be on or after this filing date.
-    to = '2023-12-31' # date | All filings returned will be on or before this filing date.
-    offset = 0 # int | Skip the first offset filings. (optional) (default to 0)
-    limit = 100 # int | Return at most limit filings. (optional) (default to 100)
-
-    try:
-        # Retrieve 13F filings for all filers in the time range.
-        api_response = api_instance.api_v1_filings_get(var_from, to, offset=offset, limit=limit)
-        print("The response of DefaultApi->api_v1_filings_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_filings_get: %s\n" % e)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1FilingsGet(context.Background()).From(from).To(to).Offset(offset).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1FilingsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1FilingsGet`: []ApiV1Form
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1FilingsGet`: %v\n", resp)
+}
 ```
 
+### Path Parameters
 
 
-### Parameters
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1FilingsGetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **var_from** | **date**| All filings returned will be on or after this filing date. | 
- **to** | **date**| All filings returned will be on or before this filing date. | 
- **offset** | **int**| Skip the first offset filings. | [optional] [default to 0]
- **limit** | **int**| Return at most limit filings. | [optional] [default to 100]
+ **from** | **string** | All filings returned will be on or after this filing date. | 
+ **to** | **string** | All filings returned will be on or before this filing date. | 
+ **offset** | **int32** | Skip the first offset filings. | [default to 0]
+ **limit** | **int32** | Return at most limit filings. | [default to 100]
 
 ### Return type
 
-[**List[ApiV1Form]**](ApiV1Form.md)
+[**[]ApiV1Form**](ApiV1Form.md)
 
 ### Authorization
 
@@ -221,75 +213,71 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-### HTTP response details
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A JSON array of FormHeader |  -  |
-**400** | Invalid request parameters |  -  |
-**500** | Internal server error |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+## ApiV1FormGet
 
-# **api_v1_form_get**
-> List[ApiV1FormEntry] api_v1_form_get(accession_number, cik, offset=offset, limit=limit)
+> []ApiV1FormEntry ApiV1FormGet(ctx).AccessionNumber(accessionNumber).Cik(cik).Offset(offset).Limit(limit).Execute()
 
 Get SEC Form 13F.
 
-Retrieve a content of form 13F by accession number and CIK.
+
 
 ### Example
 
+```go
+package main
 
-```python
-import forms13f
-from forms13f.models.api_v1_form_entry import ApiV1FormEntry
-from forms13f.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/forms13f/go-sdk"
 )
 
+func main() {
+	accessionNumber := "0000950123-24-008740" // string | The accession number of the form entry.
+	cik := "0001067983" // string | The Central Index Key (CIK) of the form entry.
+	offset := int32(0) // int32 | The offset for pagination. (optional) (default to 0)
+	limit := int32(100) // int32 | The limit for pagination. (optional) (default to 100)
 
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    accession_number = '0000950123-24-008740' # str | The accession number of the form entry.
-    cik = '0001067983' # str | The Central Index Key (CIK) of the form entry.
-    offset = 0 # int | The offset for pagination. (optional) (default to 0)
-    limit = 100 # int | The limit for pagination. (optional) (default to 100)
-
-    try:
-        # Get SEC Form 13F.
-        api_response = api_instance.api_v1_form_get(accession_number, cik, offset=offset, limit=limit)
-        print("The response of DefaultApi->api_v1_form_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_form_get: %s\n" % e)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1FormGet(context.Background()).AccessionNumber(accessionNumber).Cik(cik).Offset(offset).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1FormGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1FormGet`: []ApiV1FormEntry
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1FormGet`: %v\n", resp)
+}
 ```
 
+### Path Parameters
 
 
-### Parameters
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1FormGetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accession_number** | **str**| The accession number of the form entry. | 
- **cik** | **str**| The Central Index Key (CIK) of the form entry. | 
- **offset** | **int**| The offset for pagination. | [optional] [default to 0]
- **limit** | **int**| The limit for pagination. | [optional] [default to 100]
+ **accessionNumber** | **string** | The accession number of the form entry. | 
+ **cik** | **string** | The Central Index Key (CIK) of the form entry. | 
+ **offset** | **int32** | The offset for pagination. | [default to 0]
+ **limit** | **int32** | The limit for pagination. | [default to 100]
 
 ### Return type
 
-[**List[ApiV1FormEntry]**](ApiV1FormEntry.md)
+[**[]ApiV1FormEntry**](ApiV1FormEntry.md)
 
 ### Authorization
 
@@ -297,77 +285,73 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-### HTTP response details
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A JSON array containing form entries. |  -  |
-**400** | Invalid input, object invalid. |  -  |
-**500** | Internal server error. |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+## ApiV1FormsGet
 
-# **api_v1_forms_get**
-> List[ApiV1Form] api_v1_forms_get(cik, var_from=var_from, to=to, offset=offset, limit=limit)
+> []ApiV1Form ApiV1FormsGet(ctx).Cik(cik).From(from).To(to).Offset(offset).Limit(limit).Execute()
 
 Retrieve SEC forms 13F for a filer.
 
-This API returns SEC 13F forms between dates for a filer with CIK. Uses a period of report as timestamp.
+
 
 ### Example
 
+```go
+package main
 
-```python
-import forms13f
-from forms13f.models.api_v1_form import ApiV1Form
-from forms13f.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/forms13f/go-sdk"
 )
 
+func main() {
+	cik := "0001067983" // string | The Central Index Key (CIK) of the filer.
+	from := "2023-12-31" // string | All forms returned will be on or after this period of report date. (optional) (default to "2010-01-01")
+	to := "2024-12-31" // string | All forms returned will be on or before this period of report date. (optional) (default to "2030-01-01")
+	offset := int32(0) // int32 | Skip the first offset forms. (optional) (default to 0)
+	limit := int32(100) // int32 | Return at most limit forms. (optional) (default to 100)
 
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    cik = '0001067983' # str | The Central Index Key (CIK) of the filer.
-    var_from = '2010-01-01' # str | All forms returned will be on or after this period of report date. (optional) (default to '2010-01-01')
-    to = '2030-01-01' # str | All forms returned will be on or before this period of report date. (optional) (default to '2030-01-01')
-    offset = 0 # int | Skip the first offset forms. (optional) (default to 0)
-    limit = 100 # int | Return at most limit forms. (optional) (default to 100)
-
-    try:
-        # Retrieve SEC forms 13F for a filer.
-        api_response = api_instance.api_v1_forms_get(cik, var_from=var_from, to=to, offset=offset, limit=limit)
-        print("The response of DefaultApi->api_v1_forms_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_forms_get: %s\n" % e)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1FormsGet(context.Background()).Cik(cik).From(from).To(to).Offset(offset).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1FormsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1FormsGet`: []ApiV1Form
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1FormsGet`: %v\n", resp)
+}
 ```
 
+### Path Parameters
 
 
-### Parameters
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1FormsGetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **cik** | **str**| The Central Index Key (CIK) of the filer. | 
- **var_from** | **str**| All forms returned will be on or after this period of report date. | [optional] [default to &#39;2010-01-01&#39;]
- **to** | **str**| All forms returned will be on or before this period of report date. | [optional] [default to &#39;2030-01-01&#39;]
- **offset** | **int**| Skip the first offset forms. | [optional] [default to 0]
- **limit** | **int**| Return at most limit forms. | [optional] [default to 100]
+ **cik** | **string** | The Central Index Key (CIK) of the filer. | 
+ **from** | **string** | All forms returned will be on or after this period of report date. | [default to &quot;2010-01-01&quot;]
+ **to** | **string** | All forms returned will be on or before this period of report date. | [default to &quot;2030-01-01&quot;]
+ **offset** | **int32** | Skip the first offset forms. | [default to 0]
+ **limit** | **int32** | Return at most limit forms. | [default to 100]
 
 ### Return type
 
-[**List[ApiV1Form]**](ApiV1Form.md)
+[**[]ApiV1Form**](ApiV1Form.md)
 
 ### Authorization
 
@@ -375,73 +359,69 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-### HTTP response details
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A JSON array of FormHeader |  -  |
-**400** | Invalid request parameters |  -  |
-**500** | Internal server error |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+## ApiV1FundsGet
 
-# **api_v1_funds_get**
-> List[ApiV1Fund] api_v1_funds_get(name=name, offset=offset, limit=limit)
+> []ApiV1Fund ApiV1FundsGet(ctx).Name(name).Offset(offset).Limit(limit).Execute()
 
 Retrieve unique companies.
 
-Returns a list of unique companies with their names and associated CIKs.
+
 
 ### Example
 
+```go
+package main
 
-```python
-import forms13f
-from forms13f.models.api_v1_fund import ApiV1Fund
-from forms13f.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/forms13f/go-sdk"
 )
 
+func main() {
+	name := "berkshire" // string | Filter companies by by a substring of their name (optional)
+	offset := int32(0) // int32 | Skip previous offset companies (optional) (default to 0)
+	limit := int32(100) // int32 | Return max limit companies (optional) (default to 100)
 
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    name = 'berkshire' # str | Filter companies by by a substring of their name (optional)
-    offset = 0 # int | Skip previous offset companies (optional) (default to 0)
-    limit = 100 # int | Return max limit companies (optional) (default to 100)
-
-    try:
-        # Retrieve unique companies.
-        api_response = api_instance.api_v1_funds_get(name=name, offset=offset, limit=limit)
-        print("The response of DefaultApi->api_v1_funds_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_funds_get: %s\n" % e)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1FundsGet(context.Background()).Name(name).Offset(offset).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1FundsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1FundsGet`: []ApiV1Fund
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1FundsGet`: %v\n", resp)
+}
 ```
 
+### Path Parameters
 
 
-### Parameters
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1FundsGetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Filter companies by by a substring of their name | [optional] 
- **offset** | **int**| Skip previous offset companies | [optional] [default to 0]
- **limit** | **int**| Return max limit companies | [optional] [default to 100]
+ **name** | **string** | Filter companies by by a substring of their name | 
+ **offset** | **int32** | Skip previous offset companies | [default to 0]
+ **limit** | **int32** | Return max limit companies | [default to 100]
 
 ### Return type
 
-[**List[ApiV1Fund]**](ApiV1Fund.md)
+[**[]ApiV1Fund**](ApiV1Fund.md)
 
 ### Authorization
 
@@ -449,144 +429,67 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A JSON array of companies |  -  |
-**400** | Invalid request parameters |  -  |
-**500** | Internal server error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **api_v1_holders_get**
-> ApiV1HoldersGet200Response api_v1_holders_get(cusip, period_of_report)
-
-Retrieve CIKs for a given CUSIP and period of report.
-
-Returns a JSON object containing the CUSIP, period of report, and an array of CIKs.
-
-### Example
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
-```python
-import forms13f
-from forms13f.models.api_v1_holders_get200_response import ApiV1HoldersGet200Response
-from forms13f.rest import ApiException
-from pprint import pprint
+## ApiV1TickersGet
 
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
-)
-
-
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    cusip = '037833100' # str | The CUSIP of the securities.
-    period_of_report = '2023-12-31' # date | The period of report date.
-
-    try:
-        # Retrieve CIKs for a given CUSIP and period of report.
-        api_response = api_instance.api_v1_holders_get(cusip, period_of_report)
-        print("The response of DefaultApi->api_v1_holders_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_holders_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **cusip** | **str**| The CUSIP of the securities. | 
- **period_of_report** | **date**| The period of report date. | 
-
-### Return type
-
-[**ApiV1HoldersGet200Response**](ApiV1HoldersGet200Response.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A JSON object containing the CUSIP, period of report, and an array of CIKs. |  -  |
-**400** | Invalid request parameters |  -  |
-**500** | Internal server error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **api_v1_tickers_get**
-> List[TickerInfo] api_v1_tickers_get(cusips=cusips, tickers=tickers)
+> []TickerInfo ApiV1TickersGet(ctx).Cusips(cusips).Tickers(tickers).Execute()
 
 Returns cusip, ticker, and company name for provided matching cusips or tickers parameters
 
-Either `cusips` or `tickers` parameter must be provided.
 
 
 ### Example
 
+```go
+package main
 
-```python
-import forms13f
-from forms13f.models.ticker_info import TickerInfo
-from forms13f.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/forms13f/go-sdk"
 )
 
+func main() {
+	cusips := []string{"Inner_example"} // []string | Array of CUSIPs to match (optional)
+	tickers := []string{"Inner_example"} // []string | Array of tickers to match (optional)
 
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    cusips = ['037833100,594918104'] # List[str] | Array of CUSIPs to match (optional)
-    tickers = ['tickers_example'] # List[str] | Array of tickers to match (optional)
-
-    try:
-        # Returns cusip, ticker, and company name for provided matching cusips or tickers parameters
-        api_response = api_instance.api_v1_tickers_get(cusips=cusips, tickers=tickers)
-        print("The response of DefaultApi->api_v1_tickers_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_tickers_get: %s\n" % e)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1TickersGet(context.Background()).Cusips(cusips).Tickers(tickers).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1TickersGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1TickersGet`: []TickerInfo
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1TickersGet`: %v\n", resp)
+}
 ```
 
+### Path Parameters
 
 
-### Parameters
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1TickersGetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **cusips** | [**List[str]**](str.md)| Array of CUSIPs to match | [optional] 
- **tickers** | [**List[str]**](str.md)| Array of tickers to match | [optional] 
+ **cusips** | **[]string** | Array of CUSIPs to match | 
+ **tickers** | **[]string** | Array of tickers to match | 
 
 ### Return type
 
-[**List[TickerInfo]**](TickerInfo.md)
+[**[]TickerInfo**](TickerInfo.md)
 
 ### Authorization
 
@@ -594,90 +497,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A list of matching tickers |  -  |
-**400** | Invalid request parameters |  -  |
-**500** | Internal server error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **api_v1_topfunds_get**
-> List[ApiV1TopFund] api_v1_topfunds_get(quarter, limit=limit, offset=offset)
-
-Get top funds by PnL for a given quarter.
-
-Retrieve the top funds ranked by PnL for a specific quarter.
-
-### Example
-
-
-```python
-import forms13f
-from forms13f.models.api_v1_top_fund import ApiV1TopFund
-from forms13f.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://forms13f.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = forms13f.Configuration(
-    host = "https://forms13f.com"
-)
-
-
-# Enter a context with an instance of the API client
-with forms13f.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = forms13f.DefaultApi(api_client)
-    quarter = '2025Q4' # str | The quarter in the format YYYYQn (e.g. 2025Q4).
-    limit = 50 # int | The maximum number of funds to return. (optional) (default to 50)
-    offset = 0 # int | The offset for pagination. (optional) (default to 0)
-
-    try:
-        # Get top funds by PnL for a given quarter.
-        api_response = api_instance.api_v1_topfunds_get(quarter, limit=limit, offset=offset)
-        print("The response of DefaultApi->api_v1_topfunds_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->api_v1_topfunds_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **quarter** | **str**| The quarter in the format YYYYQn (e.g. 2025Q4). | 
- **limit** | **int**| The maximum number of funds to return. | [optional] [default to 50]
- **offset** | **int**| The offset for pagination. | [optional] [default to 0]
-
-### Return type
-
-[**List[ApiV1TopFund]**](ApiV1TopFund.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A JSON array of top funds with their PnL for the given quarter. |  -  |
-**400** | Invalid input, object invalid. |  -  |
-**500** | Internal server error. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
