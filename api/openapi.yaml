@@ -645,14 +645,12 @@ components:
         ssh_prnamt_type: ssh_prnamt_type
         voting_authority_sole: 1
         ssh_prnamt: 6
-        last_date: 2000-01-23
+        pnl: 2.3021358869347655
         accession_number: accession_number
-        first_quote: 2.3021358869347655
         name_of_issuer: name_of_issuer
         investment_discretion: investment_discretion
         put_call: put_call
         voting_authority_shared: 5
-        last_quote: 7.061401241503109
         value: 0
       properties:
         accession_number:
@@ -710,21 +708,12 @@ components:
           description: Indicates if this is a derivative position.
           nullable: true
           type: string
-        first_quote:
-          description: The price of the asset at the time of the filing (entry price).
+        pnl:
+          description: Estimated PnL percentage for this holding since the period
+            of report.
           format: double
           nullable: true
           type: number
-        last_quote:
-          description: The latest close price of the asset.
-          format: double
-          nullable: true
-          type: number
-        last_date:
-          description: The date of the latest close price.
-          format: date
-          nullable: true
-          type: string
       type: object
     ApiV1Fund:
       example:
