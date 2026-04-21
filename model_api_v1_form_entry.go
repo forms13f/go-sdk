@@ -48,6 +48,12 @@ type ApiV1FormEntry struct {
 	VotingAuthorityNone NullableInt64 `json:"voting_authority_none,omitempty"`
 	// Indicates if this is a derivative position.
 	PutCall NullableString `json:"put_call,omitempty"`
+	// The price of the asset at the time of the filing (entry price).
+	FirstQuote NullableFloat64 `json:"first_quote,omitempty"`
+	// The latest close price of the asset.
+	LastQuote NullableFloat64 `json:"last_quote,omitempty"`
+	// The date of the latest close price.
+	LastDate NullableString `json:"last_date,omitempty"`
 }
 
 // NewApiV1FormEntry instantiates a new ApiV1FormEntry object
@@ -595,6 +601,132 @@ func (o *ApiV1FormEntry) UnsetPutCall() {
 	o.PutCall.Unset()
 }
 
+// GetFirstQuote returns the FirstQuote field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApiV1FormEntry) GetFirstQuote() float64 {
+	if o == nil || IsNil(o.FirstQuote.Get()) {
+		var ret float64
+		return ret
+	}
+	return *o.FirstQuote.Get()
+}
+
+// GetFirstQuoteOk returns a tuple with the FirstQuote field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApiV1FormEntry) GetFirstQuoteOk() (*float64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.FirstQuote.Get(), o.FirstQuote.IsSet()
+}
+
+// HasFirstQuote returns a boolean if a field has been set.
+func (o *ApiV1FormEntry) HasFirstQuote() bool {
+	if o != nil && o.FirstQuote.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFirstQuote gets a reference to the given NullableFloat64 and assigns it to the FirstQuote field.
+func (o *ApiV1FormEntry) SetFirstQuote(v float64) {
+	o.FirstQuote.Set(&v)
+}
+// SetFirstQuoteNil sets the value for FirstQuote to be an explicit nil
+func (o *ApiV1FormEntry) SetFirstQuoteNil() {
+	o.FirstQuote.Set(nil)
+}
+
+// UnsetFirstQuote ensures that no value is present for FirstQuote, not even an explicit nil
+func (o *ApiV1FormEntry) UnsetFirstQuote() {
+	o.FirstQuote.Unset()
+}
+
+// GetLastQuote returns the LastQuote field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApiV1FormEntry) GetLastQuote() float64 {
+	if o == nil || IsNil(o.LastQuote.Get()) {
+		var ret float64
+		return ret
+	}
+	return *o.LastQuote.Get()
+}
+
+// GetLastQuoteOk returns a tuple with the LastQuote field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApiV1FormEntry) GetLastQuoteOk() (*float64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastQuote.Get(), o.LastQuote.IsSet()
+}
+
+// HasLastQuote returns a boolean if a field has been set.
+func (o *ApiV1FormEntry) HasLastQuote() bool {
+	if o != nil && o.LastQuote.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastQuote gets a reference to the given NullableFloat64 and assigns it to the LastQuote field.
+func (o *ApiV1FormEntry) SetLastQuote(v float64) {
+	o.LastQuote.Set(&v)
+}
+// SetLastQuoteNil sets the value for LastQuote to be an explicit nil
+func (o *ApiV1FormEntry) SetLastQuoteNil() {
+	o.LastQuote.Set(nil)
+}
+
+// UnsetLastQuote ensures that no value is present for LastQuote, not even an explicit nil
+func (o *ApiV1FormEntry) UnsetLastQuote() {
+	o.LastQuote.Unset()
+}
+
+// GetLastDate returns the LastDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApiV1FormEntry) GetLastDate() string {
+	if o == nil || IsNil(o.LastDate.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.LastDate.Get()
+}
+
+// GetLastDateOk returns a tuple with the LastDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApiV1FormEntry) GetLastDateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastDate.Get(), o.LastDate.IsSet()
+}
+
+// HasLastDate returns a boolean if a field has been set.
+func (o *ApiV1FormEntry) HasLastDate() bool {
+	if o != nil && o.LastDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastDate gets a reference to the given NullableString and assigns it to the LastDate field.
+func (o *ApiV1FormEntry) SetLastDate(v string) {
+	o.LastDate.Set(&v)
+}
+// SetLastDateNil sets the value for LastDate to be an explicit nil
+func (o *ApiV1FormEntry) SetLastDateNil() {
+	o.LastDate.Set(nil)
+}
+
+// UnsetLastDate ensures that no value is present for LastDate, not even an explicit nil
+func (o *ApiV1FormEntry) UnsetLastDate() {
+	o.LastDate.Unset()
+}
+
 func (o ApiV1FormEntry) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -646,6 +778,15 @@ func (o ApiV1FormEntry) ToMap() (map[string]interface{}, error) {
 	}
 	if o.PutCall.IsSet() {
 		toSerialize["put_call"] = o.PutCall.Get()
+	}
+	if o.FirstQuote.IsSet() {
+		toSerialize["first_quote"] = o.FirstQuote.Get()
+	}
+	if o.LastQuote.IsSet() {
+		toSerialize["last_quote"] = o.LastQuote.Get()
+	}
+	if o.LastDate.IsSet() {
+		toSerialize["last_date"] = o.LastDate.Get()
 	}
 	return toSerialize, nil
 }

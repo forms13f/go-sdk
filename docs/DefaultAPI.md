@@ -10,7 +10,9 @@ Method | HTTP request | Description
 [**ApiV1FormGet**](DefaultAPI.md#ApiV1FormGet) | **Get** /api/v1/form | Get SEC Form 13F.
 [**ApiV1FormsGet**](DefaultAPI.md#ApiV1FormsGet) | **Get** /api/v1/forms | Retrieve SEC forms 13F for a filer.
 [**ApiV1FundsGet**](DefaultAPI.md#ApiV1FundsGet) | **Get** /api/v1/funds | Retrieve unique companies.
+[**ApiV1HoldersGet**](DefaultAPI.md#ApiV1HoldersGet) | **Get** /api/v1/holders | Retrieve CIKs for a given CUSIP and period of report.
 [**ApiV1TickersGet**](DefaultAPI.md#ApiV1TickersGet) | **Get** /api/v1/tickers | Returns cusip, ticker, and company name for provided matching cusips or tickers parameters
+[**ApiV1TopfundsGet**](DefaultAPI.md#ApiV1TopfundsGet) | **Get** /api/v1/topfunds | Get top funds by PnL for a given quarter.
 
 
 
@@ -437,6 +439,75 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## ApiV1HoldersGet
+
+> ApiV1HoldersGet200Response ApiV1HoldersGet(ctx).Cusip(cusip).PeriodOfReport(periodOfReport).Execute()
+
+Retrieve CIKs for a given CUSIP and period of report.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+    "time"
+	openapiclient "github.com/forms13f/go-sdk"
+)
+
+func main() {
+	cusip := "037833100" // string | The CUSIP of the securities.
+	periodOfReport := time.Now() // string | The period of report date.
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1HoldersGet(context.Background()).Cusip(cusip).PeriodOfReport(periodOfReport).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1HoldersGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1HoldersGet`: ApiV1HoldersGet200Response
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1HoldersGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1HoldersGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **cusip** | **string** | The CUSIP of the securities. | 
+ **periodOfReport** | **string** | The period of report date. | 
+
+### Return type
+
+[**ApiV1HoldersGet200Response**](ApiV1HoldersGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ApiV1TickersGet
 
 > []TickerInfo ApiV1TickersGet(ctx).Cusips(cusips).Tickers(tickers).Execute()
@@ -490,6 +561,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]TickerInfo**](TickerInfo.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ApiV1TopfundsGet
+
+> []ApiV1TopFund ApiV1TopfundsGet(ctx).Quarter(quarter).Limit(limit).Offset(offset).Execute()
+
+Get top funds by PnL for a given quarter.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/forms13f/go-sdk"
+)
+
+func main() {
+	quarter := "2025Q4" // string | The quarter in the format YYYYQn (e.g. 2025Q4).
+	limit := int32(50) // int32 | The maximum number of funds to return. (optional) (default to 50)
+	offset := int32(0) // int32 | The offset for pagination. (optional) (default to 0)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1TopfundsGet(context.Background()).Quarter(quarter).Limit(limit).Offset(offset).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1TopfundsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1TopfundsGet`: []ApiV1TopFund
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1TopfundsGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1TopfundsGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **quarter** | **string** | The quarter in the format YYYYQn (e.g. 2025Q4). | 
+ **limit** | **int32** | The maximum number of funds to return. | [default to 50]
+ **offset** | **int32** | The offset for pagination. | [default to 0]
+
+### Return type
+
+[**[]ApiV1TopFund**](ApiV1TopFund.md)
 
 ### Authorization
 
