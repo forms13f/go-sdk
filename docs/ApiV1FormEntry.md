@@ -18,6 +18,9 @@ Name | Type | Description | Notes
 **VotingAuthorityShared** | Pointer to **NullableInt64** | The shared voting authority. | [optional] 
 **VotingAuthorityNone** | Pointer to **NullableInt64** | The no voting authority. | [optional] 
 **PutCall** | Pointer to **NullableString** | Indicates if this is a derivative position. | [optional] 
+**FirstQuote** | Pointer to **NullableFloat64** | The price of the asset at the time of the filing (entry price). | [optional] 
+**LastQuote** | Pointer to **NullableFloat64** | The latest close price of the asset. | [optional] 
+**LastDate** | Pointer to **NullableString** | The date of the latest close price. | [optional] 
 
 ## Methods
 
@@ -468,6 +471,111 @@ HasPutCall returns a boolean if a field has been set.
 `func (o *ApiV1FormEntry) UnsetPutCall()`
 
 UnsetPutCall ensures that no value is present for PutCall, not even an explicit nil
+### GetFirstQuote
+
+`func (o *ApiV1FormEntry) GetFirstQuote() float64`
+
+GetFirstQuote returns the FirstQuote field if non-nil, zero value otherwise.
+
+### GetFirstQuoteOk
+
+`func (o *ApiV1FormEntry) GetFirstQuoteOk() (*float64, bool)`
+
+GetFirstQuoteOk returns a tuple with the FirstQuote field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFirstQuote
+
+`func (o *ApiV1FormEntry) SetFirstQuote(v float64)`
+
+SetFirstQuote sets FirstQuote field to given value.
+
+### HasFirstQuote
+
+`func (o *ApiV1FormEntry) HasFirstQuote() bool`
+
+HasFirstQuote returns a boolean if a field has been set.
+
+### SetFirstQuoteNil
+
+`func (o *ApiV1FormEntry) SetFirstQuoteNil(b bool)`
+
+ SetFirstQuoteNil sets the value for FirstQuote to be an explicit nil
+
+### UnsetFirstQuote
+`func (o *ApiV1FormEntry) UnsetFirstQuote()`
+
+UnsetFirstQuote ensures that no value is present for FirstQuote, not even an explicit nil
+### GetLastQuote
+
+`func (o *ApiV1FormEntry) GetLastQuote() float64`
+
+GetLastQuote returns the LastQuote field if non-nil, zero value otherwise.
+
+### GetLastQuoteOk
+
+`func (o *ApiV1FormEntry) GetLastQuoteOk() (*float64, bool)`
+
+GetLastQuoteOk returns a tuple with the LastQuote field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastQuote
+
+`func (o *ApiV1FormEntry) SetLastQuote(v float64)`
+
+SetLastQuote sets LastQuote field to given value.
+
+### HasLastQuote
+
+`func (o *ApiV1FormEntry) HasLastQuote() bool`
+
+HasLastQuote returns a boolean if a field has been set.
+
+### SetLastQuoteNil
+
+`func (o *ApiV1FormEntry) SetLastQuoteNil(b bool)`
+
+ SetLastQuoteNil sets the value for LastQuote to be an explicit nil
+
+### UnsetLastQuote
+`func (o *ApiV1FormEntry) UnsetLastQuote()`
+
+UnsetLastQuote ensures that no value is present for LastQuote, not even an explicit nil
+### GetLastDate
+
+`func (o *ApiV1FormEntry) GetLastDate() string`
+
+GetLastDate returns the LastDate field if non-nil, zero value otherwise.
+
+### GetLastDateOk
+
+`func (o *ApiV1FormEntry) GetLastDateOk() (*string, bool)`
+
+GetLastDateOk returns a tuple with the LastDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastDate
+
+`func (o *ApiV1FormEntry) SetLastDate(v string)`
+
+SetLastDate sets LastDate field to given value.
+
+### HasLastDate
+
+`func (o *ApiV1FormEntry) HasLastDate() bool`
+
+HasLastDate returns a boolean if a field has been set.
+
+### SetLastDateNil
+
+`func (o *ApiV1FormEntry) SetLastDateNil(b bool)`
+
+ SetLastDateNil sets the value for LastDate to be an explicit nil
+
+### UnsetLastDate
+`func (o *ApiV1FormEntry) UnsetLastDate()`
+
+UnsetLastDate ensures that no value is present for LastDate, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
