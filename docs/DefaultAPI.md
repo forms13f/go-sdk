@@ -225,7 +225,7 @@ No authorization required
 
 ## ApiV1FormGet
 
-> []ApiV1FormEntry ApiV1FormGet(ctx).AccessionNumber(accessionNumber).Cik(cik).Offset(offset).Limit(limit).Execute()
+> ApiV1FormResponse ApiV1FormGet(ctx).AccessionNumber(accessionNumber).Cik(cik).Offset(offset).Limit(limit).Execute()
 
 Get SEC Form 13F.
 
@@ -256,7 +256,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1FormGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ApiV1FormGet`: []ApiV1FormEntry
+	// response from `ApiV1FormGet`: ApiV1FormResponse
 	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1FormGet`: %v\n", resp)
 }
 ```
@@ -279,7 +279,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]ApiV1FormEntry**](ApiV1FormEntry.md)
+[**ApiV1FormResponse**](ApiV1FormResponse.md)
 
 ### Authorization
 
