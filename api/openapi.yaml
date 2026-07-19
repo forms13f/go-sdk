@@ -40,7 +40,7 @@ paths:
                 - Alternative name
               schema:
                 items:
-                  $ref: '#/components/schemas/ApiV1Filer'
+                  $ref: "#/components/schemas/ApiV1Filer"
                 type: array
           description: A JSON array of filers
         "400":
@@ -70,7 +70,7 @@ paths:
                 - BERKSHIRE HATHAWAY INC
                 - Alternative name
               schema:
-                $ref: '#/components/schemas/ApiV1Filer'
+                $ref: "#/components/schemas/ApiV1Filer"
           description: A JSON object representing the filer
         "400":
           description: Invalid request parameters
@@ -159,7 +159,7 @@ paths:
                 amendment_date_reported: 2024-02-14
               schema:
                 items:
-                  $ref: '#/components/schemas/ApiV1Form'
+                  $ref: "#/components/schemas/ApiV1Form"
                 type: array
           description: A JSON array of FormHeader
         "400":
@@ -209,25 +209,24 @@ paths:
           content:
             application/json:
               example:
-                total_pnl: 137.59
-                entries:
-                - accession_number: 0000950123-24-008740
-                  cik: "0001067983"
-                  name_of_issuer: VISA INC
-                  title_of_class: COM CL A
-                  cusip: 92826C839
-                  ticker: V
-                  value: 2177834326
-                  ssh_prnamt: 8297460
-                  ssh_prnamt_type: SH
-                  investment_discretion: DFND
-                  voting_authority_sole: 8297460
-                  voting_authority_shared: 0
-                  voting_authority_none: 0
-                  pnl: 12.34
+              - accession_number: 0000950123-24-008740
+                cik: "0001067983"
+                name_of_issuer: VISA INC
+                title_of_class: COM CL A
+                cusip: 92826C839
+                ticker: V
+                value: 2177834326
+                ssh_prnamt: 8297460
+                ssh_prnamt_type: SH
+                investment_discretion: DFND
+                voting_authority_sole: 8297460
+                voting_authority_shared: 0
+                voting_authority_none: 0
               schema:
-                $ref: '#/components/schemas/ApiV1FormResponse'
-          description: A JSON object containing the total PnL and form entries.
+                items:
+                  $ref: "#/components/schemas/ApiV1FormEntry"
+                type: array
+          description: A JSON array containing form entries.
         "400":
           description: "Invalid input, object invalid."
         "500":
@@ -271,7 +270,7 @@ paths:
                 CIK: "1067983"
               schema:
                 items:
-                  $ref: '#/components/schemas/ApiV1Fund'
+                  $ref: "#/components/schemas/ApiV1Fund"
                 type: array
           description: A JSON array of companies
         "400":
@@ -350,7 +349,7 @@ paths:
                 amendment_date_reported: 2024-02-14
               schema:
                 items:
-                  $ref: '#/components/schemas/ApiV1Form'
+                  $ref: "#/components/schemas/ApiV1Form"
                 type: array
           description: A JSON array of FormHeader
         "400":
@@ -400,7 +399,7 @@ paths:
                     company_name: Microsoft Corporation
               schema:
                 items:
-                  $ref: '#/components/schemas/TickerInfo'
+                  $ref: "#/components/schemas/TickerInfo"
                 type: array
           description: A list of matching tickers
         "400":
@@ -440,7 +439,7 @@ paths:
                 - "0001067983"
                 - "0000320193"
               schema:
-                $ref: '#/components/schemas/_api_v1_holders_get_200_response'
+                $ref: "#/components/schemas/_api_v1_holders_get_200_response"
           description: "A JSON object containing the CUSIP, period of report, and\
             \ an array of CIKs."
         "400":
@@ -489,7 +488,7 @@ paths:
                 pnl: 12.34
               schema:
                 items:
-                  $ref: '#/components/schemas/ApiV1TopFund'
+                  $ref: "#/components/schemas/ApiV1TopFund"
                 type: array
           description: A JSON array of top funds with their PnL for the given quarter.
         "400":
@@ -636,70 +635,23 @@ components:
           format: date
           type: string
       type: object
-    ApiV1FormResponse:
-      example:
-        entries:
-        - voting_authority_none: 2
-          title_of_class: title_of_class
-          cusip: cusip
-          ticker: ticker
-          cik: cik
-          ssh_prnamt_type: ssh_prnamt_type
-          voting_authority_sole: 5
-          ssh_prnamt: 1
-          pnl: 7.061401241503109
-          accession_number: accession_number
-          name_of_issuer: name_of_issuer
-          investment_discretion: investment_discretion
-          put_call: put_call
-          voting_authority_shared: 5
-          value: 6
-        - voting_authority_none: 2
-          title_of_class: title_of_class
-          cusip: cusip
-          ticker: ticker
-          cik: cik
-          ssh_prnamt_type: ssh_prnamt_type
-          voting_authority_sole: 5
-          ssh_prnamt: 1
-          pnl: 7.061401241503109
-          accession_number: accession_number
-          name_of_issuer: name_of_issuer
-          investment_discretion: investment_discretion
-          put_call: put_call
-          voting_authority_shared: 5
-          value: 6
-        total_pnl: 0.8008281904610115
-      properties:
-        total_pnl:
-          description: Estimated total PnL percentage across all holdings in the form
-            since the period of report.
-          format: double
-          nullable: true
-          type: number
-        entries:
-          description: The holdings reported in the form.
-          items:
-            $ref: '#/components/schemas/ApiV1FormEntry'
-          type: array
-      type: object
     ApiV1FormEntry:
       example:
-        voting_authority_none: 2
+        voting_authority_none: 5
         title_of_class: title_of_class
         cusip: cusip
         ticker: ticker
         cik: cik
         ssh_prnamt_type: ssh_prnamt_type
-        voting_authority_sole: 5
-        ssh_prnamt: 1
-        pnl: 7.061401241503109
+        voting_authority_sole: 1
+        ssh_prnamt: 6
+        pnl: 2.3021358869347655
         accession_number: accession_number
         name_of_issuer: name_of_issuer
         investment_discretion: investment_discretion
         put_call: put_call
         voting_authority_shared: 5
-        value: 6
+        value: 0
       properties:
         accession_number:
           description: The accession number of the form entry.

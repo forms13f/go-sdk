@@ -438,7 +438,7 @@ func (r ApiApiV1FormGetRequest) Limit(limit int32) ApiApiV1FormGetRequest {
 	return r
 }
 
-func (r ApiApiV1FormGetRequest) Execute() (*ApiV1FormResponse, *http.Response, error) {
+func (r ApiApiV1FormGetRequest) Execute() ([]ApiV1FormEntry, *http.Response, error) {
 	return r.ApiService.ApiV1FormGetExecute(r)
 }
 
@@ -458,13 +458,13 @@ func (a *DefaultAPIService) ApiV1FormGet(ctx context.Context) ApiApiV1FormGetReq
 }
 
 // Execute executes the request
-//  @return ApiV1FormResponse
-func (a *DefaultAPIService) ApiV1FormGetExecute(r ApiApiV1FormGetRequest) (*ApiV1FormResponse, *http.Response, error) {
+//  @return []ApiV1FormEntry
+func (a *DefaultAPIService) ApiV1FormGetExecute(r ApiApiV1FormGetRequest) ([]ApiV1FormEntry, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ApiV1FormResponse
+		localVarReturnValue  []ApiV1FormEntry
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ApiV1FormGet")
